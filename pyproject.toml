@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "autogram"
+version = "0.1.0"
+description = ""
+authors = ["Stas German <stas.german@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.11"
+# openai = "^0.10.0"
+requests = "^2.32.3"
+telethon = "^1.36.0"
+openai = "^1.45.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.14.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
