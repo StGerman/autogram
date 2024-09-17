@@ -12,6 +12,11 @@ python = ">=3.11"
 requests = "^2.32.3"
 telethon = "^1.36.0"
 openai = "^1.45.0"
+beautifulsoup4 = "^4.12.3"
+python-dotenv = "^1.0.1"
+newspaper3k = "^0.2.8"
+lxml-html-clean = "^0.2.2"
+tiktoken = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
@@ -21,3 +26,7 @@ pytest-mock = "^3.14.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+autogram = "autogram:run"
+clean = "autogram:clean"
