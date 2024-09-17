@@ -1,5 +1,6 @@
 .env
 autogram.session
+articles/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
