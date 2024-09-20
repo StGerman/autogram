@@ -117,7 +117,7 @@ async def main():
         # Parse and summarize articles
         for url, html in zip(urls, html_contents):
             filename = re.sub(r'\W+', '_', url) + '.md'
-            if os.path.exists(filename):
+            if file_manager.check_file_exists(filename):
                 logging.info("File %s already exists. Skipping summarize.", filename)
                 continue
             if html:

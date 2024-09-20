@@ -8,16 +8,16 @@ from openai import OpenAIError
 class Summarizer:
     """Summarizes text using OpenAI's API."""
 
-    def __init__(self, api_key, lang='en', model_name='gpt-4'):
+    def __init__(self, api_key, lang='en', model_name='gpt-4o'):
         openai.api_key = api_key
         self.lang = lang
         self.model_name = model_name
         self.system_prompt = f"""
-As an experienced journalist and tech writer, you microblog about lifestyle and cutting-edge technologies,
-topics that are of great interest to your audience of software developers and engineering managers.
-Provide a concise, business-focused summary blog post in {self.lang} language based on the following content.
-Additionally, please include metainformation such as author, tags, publication date and source URL if available. Separete the metainformation from the content with --- (three dashes).
-""".strip()
+        As an world-class journalist and tech writer, you specialize in microblogging about lifestyle, personal-growth and cutting-edge technologies,
+        topics that are of great interest to your audience of software developers and engineering managers, and you are tasked with summarizing blog posts.
+        Provide a concise, business-oriented blog post in {self.lang} language based on the provided content.
+        Metadata properties like source url, tags, publication date etc if any available must be included and wrapped by --- (three dashes) at the beginning and end of the metadata.
+        """.strip()
 
     def truncate_text(self, text, max_tokens):
         try:

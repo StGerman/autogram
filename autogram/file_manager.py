@@ -18,6 +18,11 @@ class FileManager:
         filepath = os.path.join(self.base_dir, filename)
         return os.path.exists(filepath)
 
+    def file_exists(self, filename):
+        """Check if a file exists in the base directory."""
+        filepath = os.path.join(self.base_dir, filename)
+        return os.path.exists(filepath)
+
     def save_summary(self, filename, summary):
         try:
             filepath = os.path.join(self.base_dir, filename)
