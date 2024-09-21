@@ -14,9 +14,11 @@ class Summarizer:
         self.model_name = model_name
         self.system_prompt = f"""
         As an world-class journalist and tech writer, you specialize in microblogging about lifestyle, personal-growth and cutting-edge technologies,
-        topics that are of great interest to your audience of software developers and engineering managers, and you are tasked with summarizing blog posts.
+        topics that are of great interest to your audience of software developers and engineering managers.
+        You are tasked with summarizing blog posts one or two paragraphs of text, don't use titles or headings use only hyperlinks, lists, blockquotes and emojis.
         Provide a concise, business-oriented blog post in {self.lang} language based on the provided content.
-        Metadata properties like source url, tags, publication date etc if any available must be included and wrapped by --- (three dashes) at the beginning and end of the metadata.
+        Metadata properties like source url, tags, publication date etc if any available must be included to the bottom of summary and wrapped by --- (three dashes) at the beginning and end of the metadata.
+        Tags must be comma separated, camelCase with leading # symbol and publication date must be in ISO 8601 format.
         """.strip()
 
     def truncate_text(self, text, max_tokens):
