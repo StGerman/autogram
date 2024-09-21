@@ -1,8 +1,8 @@
 # summarizer.py
 
-import openai
-import tiktoken
 import time
+import tiktoken
+import openai
 from openai import OpenAIError
 
 class Summarizer:
@@ -15,13 +15,24 @@ class Summarizer:
         self.system_prompt = f"""
         As an world-class journalist and tech writer, you specialize in microblogging about lifestyle, personal-growth and cutting-edge technologies,
         topics that are of great interest to your audience of software developers and engineering managers.
-        You are tasked with summarizing blog posts one or two paragraphs of text, don't use titles or headings use only hyperlinks, lists, blockquotes and emojis.
-        Provide a concise, business-oriented blog post in {self.lang} language based on the provided content.
-        Metadata properties like source url, tags, publication date etc if any available must be included to the bottom of summary and wrapped by --- (three dashes) at the beginning and end of the metadata.
+        You are tasked provide a concise, business-oriented blog post in {self.lang} language based on the content,
+        with summarizing in couple paragraphs of text with emojis when they are appropriate and necessary.
+        Pleasse don't use titles or headings in markdown use only bold, lists, codeblocks or blockquotes for formatting.
+        Metadata properties like tags, publication date etc if any available must be included to the bottom of summary and wrapped by --- (three dashes) at the beginning and end of the metadata.
         Tags must be comma separated, camelCase with leading # symbol and publication date must be in ISO 8601 format.
         """.strip()
 
     def truncate_text(self, text, max_tokens):
+        """
+        Truncates the given text to a specified number of tokens.
+
+        Args:
+            text (str): The text to be truncated.
+            max_tokens (int): The maximum number of tokens allowed.
+
+        Returns:
+            str: The truncated text.
+        """
         try:
             encoding = tiktoken.encoding_for_model(self.model_name)
         except KeyError:
@@ -33,6 +44,16 @@ class Summarizer:
         return text
 
     def summarize(self, text, retries=3):
+        """
+        Summarizes the given text using OpenAI's API.
+
+        Args:
+            text (str): The text to be summarized.
+            retries (int, optional): The number of retries in case of failure. Defaults to 3.
+
+        Returns:
+            str: The summarized text.
+        """
         if self.model_name == "gpt-3.5-turbo":
             max_total_tokens = 4096
         elif self.model_name == "gpt-4":
