@@ -1,87 +1,48 @@
+# autogram/main.py
+
 """
 Main script to run the Autogram application.
 
-This script orchestrates the extraction of URLs from a Telegram channel,
-fetches content from those URLs, summarizes the content using OpenAI's GPT-4,
-and saves the summaries to files.
-
-Usage:
-- Ensure all environment variables are set, either via a .env file or directly in the environment.
-- Run this script directly: `python main.py`
-
-Important:
-- Do not log sensitive information such as API keys or hashes.
+This script now utilizes the Autogram class to handle the main functionality.
 """
 
 import asyncio
-import re
 import logging
 
-from autogram.config import Config
-from autogram.telegram_client_handler import TelegramClientHandler
-from autogram.article_fetcher import ArticleFetcher
-from autogram.article_parser import ArticleParser
-from autogram.summarizer import Summarizer
-from autogram.file_manager import FileManager
+from autogram.autogram import Autogram
 
-def run():
-    """Run the main asynchronous function."""
-    asyncio.run(main())
-    logging.info("Done!")
+def save():
+    """Run the save function to fetch and save summaries."""
+    asyncio.run(save_summaries())
+    logging.info("Done saving summaries.")
+
+def update():
+    """Run the update function to update Telegram messages with summaries."""
+    asyncio.run(update_messages())
+    logging.info("Done updating messages.")
+
+async def restore_messages():
+    """Run the restore_messages method of Autogram."""
+    autogram = Autogram()
+    await autogram.restore_messages()
+
+def restore():
+    """Run the restore function to restore Telegram messages with summaries."""
+    asyncio.run(restore_messages())
+    logging.info("Done restoring messages.")
 
 async def main():
-    """
-    Main function to extract URLs from a Telegram channel,
-    fetch and summarize articles,
-    and save the summaries to files.
-    """
-    # Initialize configuration
-    config = Config()
+    """Main function that runs both save and update."""
+    autogram = Autogram()
+    await autogram.save_summaries()
+    await autogram.update_messages()
 
-    # Configure logging with timestamps and log levels
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+async def save_summaries():
+    """Run the save_summaries method of Autogram."""
+    autogram = Autogram()
+    await autogram.save_summaries()
 
-    logging.info("Starting Autogram...")
-    logging.info("API_ID: %s", config.API_ID)
-    logging.info("CHANNEL_NAME: %s", config.CHANNEL_NAME)
-    logging.info("LANG: %s", config.LANG)
-
-    # Note: Avoid logging sensitive information like API_HASH and OPENAI_API_KEY
-
-    # Initialize components for handling different parts of the process
-    logging.info("Initializing components...")
-
-    # Create instances of the components, passing configuration as needed
-    telegram_handler = TelegramClientHandler(config.API_ID, config.API_HASH)
-    fetcher = ArticleFetcher()
-    parser = ArticleParser()
-    summarizer = Summarizer(config.OPENAI_API_KEY, lang=config.LANG)
-    file_manager = FileManager(lang=config.LANG)
-
-    try:
-        # Extract URLs from Telegram channel
-        urls = await telegram_handler.get_urls_from_channel(config.CHANNEL_NAME)
-
-
-        # Fetch articles
-        html_contents = await fetcher.fetch_all(urls)
-
-        # Parse and summarize articles
-        for url, html in zip(urls, html_contents):
-            filename = re.sub(r'\W+', '_', url) + '.md'
-            if file_manager.check_file_exists(filename):
-                logging.info("File %s already exists. Skipping summarize.", filename)
-                continue
-            if html:
-                content = parser.parse(html)
-                if content:
-                    summary = summarizer.summarize("content: %s, url: %s" % (content, url))
-                    if summary:
-                        filename = re.sub(r'\W+', '_', url) + '.md'
-                        file_manager.save_summary(filename, summary)
-    finally:
-        await telegram_handler.stop()
+async def update_messages():
+    """Run the update_messages method of Autogram."""
+    autogram = Autogram()
+    await autogram.update_messages()

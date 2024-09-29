@@ -22,11 +22,14 @@ tiktoken = "^0.7.0"
 pytest = "^8.3.3"
 pytest-cov = "^5.0.0"
 pytest-mock = "^3.14.0"
+pytest-asyncio = "^0.24.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-autogram = "autogram:run"
-clean = "autogram:clean"
+save = "autogram.main:save"
+update = "autogram.main:update"
+restore = "autogram.main:restore"
+autogram = "autogram.main:main"

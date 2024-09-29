@@ -1,21 +1,23 @@
-# config.py
+# autogram/config.py
 
 import os
 import sys
-from dotenv import load_dotenv
 import logging
+from dotenv import load_dotenv
 
 class Config:
     """
     Configuration class to load and validate environment variables.
     """
 
-    def __init__(self):
+    def __init__(self, load_env=True):
         """
         Initialize the Config class by loading environment variables and validating them.
+        :param load_env: Whether to load environment variables from .env file.
         """
-        # Load environment variables from .env file if present
-        load_dotenv()
+        if load_env:
+            # Load environment variables from .env file if present
+            load_dotenv()
 
         # Load configuration from environment variables
         self.API_ID = os.getenv('TELEGRAM_API_ID')

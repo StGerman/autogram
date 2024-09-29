@@ -23,7 +23,18 @@ class FileManager:
         filepath = os.path.join(self.base_dir, filename)
         return os.path.exists(filepath)
 
+    def load_summary(self, filename):
+        """Load a summary from a file in the base directory."""
+        try:
+            filepath = os.path.join(self.base_dir, filename)
+            with open(filepath, 'r', encoding='utf-8') as f:
+                return f.read()
+        except Exception as e:
+            logger.info(f"Error loading summary: {e}")
+            return None
+
     def save_summary(self, filename, summary):
+        """Save a summary to a file in the base directory."""
         try:
             filepath = os.path.join(self.base_dir, filename)
             with open(filepath, 'w', encoding='utf-8') as f:

@@ -1,8 +1,8 @@
 # summarizer.py
 
-import openai
-import tiktoken
 import time
+import tiktoken
+import openai
 from openai import OpenAIError
 
 class Summarizer:
@@ -13,13 +13,23 @@ class Summarizer:
         self.lang = lang
         self.model_name = model_name
         self.system_prompt = f"""
-        As an world-class journalist and tech writer, you specialize in microblogging about lifestyle, personal-growth and cutting-edge technologies,
-        topics that are of great interest to your audience of software developers and engineering managers, and you are tasked with summarizing blog posts.
-        Provide a concise, business-oriented blog post in {self.lang} language based on the provided content.
-        Metadata properties like source url, tags, publication date etc if any available must be included and wrapped by --- (three dashes) at the beginning and end of the metadata.
+        As a world-class journalist and tech writer, you specialize in microblogging about lifestyle, personal growth, and cutting-edge technologies. Your engaging storytelling captivates an audience eager for both professional and personal development.
+        You are tasked with providing concise, business-oriented blog posts in {self.lang} language. Summarize key insights in a couple of paragraphs, using emojis where appropriate to add personality and clarity. Avoid using titles or headings in markdown; instead, utilize bold text, lists, code blocks, or block quotes for formatting to enhance readability.
+        Metadata properties like tags and publication date should be included at the bottom of each summary, wrapped by three dashes (---) at the beginning and end. Tags must be comma-separated, camelCase with a leading # symbol, and the publication date must be in ISO 8601 format 📅.
+        Incorporate actionable advice and real-world examples to help your readers apply concepts immediately. Encourage community engagement by posing thought-provoking questions or inviting readers to share their experiences.
         """.strip()
 
     def truncate_text(self, text, max_tokens):
+        """
+        Truncates the given text to a specified number of tokens.
+
+        Args:
+            text (str): The text to be truncated.
+            max_tokens (int): The maximum number of tokens allowed.
+
+        Returns:
+            str: The truncated text.
+        """
         try:
             encoding = tiktoken.encoding_for_model(self.model_name)
         except KeyError:
@@ -31,6 +41,16 @@ class Summarizer:
         return text
 
     def summarize(self, text, retries=3):
+        """
+        Summarizes the given text using OpenAI's API.
+
+        Args:
+            text (str): The text to be summarized.
+            retries (int, optional): The number of retries in case of failure. Defaults to 3.
+
+        Returns:
+            str: The summarized text.
+        """
         if self.model_name == "gpt-3.5-turbo":
             max_total_tokens = 4096
         elif self.model_name == "gpt-4":
