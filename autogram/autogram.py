@@ -12,9 +12,6 @@ import logging
 
 from autogram.config import Config
 from autogram.telegram_client_handler import TelegramClientHandler
-from autogram.article_fetcher import ArticleFetcher
-from autogram.article_parser import ArticleParser
-from autogram.summarizer import Summarizer
 from autogram.file_manager import FileManager
 from autogram.mapping_manager import MappingManager
 from autogram.message_updater import MessageUpdater
@@ -56,7 +53,7 @@ class Autogram:
         self.file_manager = FileManager(lang=self.config.LANG)
         self.mapping_manager = MappingManager(self.file_manager)
         self.message_processor = MessageProcessor(self.config, self.file_manager)
-        self.message_updater = MessageUpdater(self.telegram_handler, self.file_manager)
+        self.message_updater = MessageUpdater(self.telegram_handler, self.file_manager, self.config.CHANNEL_NAME)
 
     async def save_summaries(self):
         """Extract messages with URLs, fetch content, generate summaries, save them to files, and map message IDs to summaries."""
@@ -113,61 +110,3 @@ class Autogram:
         """Replaces message content with the URLs only."""
         urls = [info['url'] for info in summaries_info]
         return "\n".join(urls) if urls else message.message
-
-
-class MessageProcessor:
-    """
-    Handles the extraction and processing of messages with URLs, including fetching,
-    parsing, summarizing content, and saving summaries to files.
-    """
-
-    def __init__(self, config, file_manager):
-        self.config = config
-        self.file_manager = file_manager
-        self.fetcher = ArticleFetcher()
-        self.parser = ArticleParser()
-        self.summarizer = Summarizer(config.OPENAI_API_KEY, lang=config.LANG)
-
-    async def process_messages(self, messages_with_urls):
-        """Processes a list of messages with URLs and generates summaries."""
-        mapping = {}
-        for message, urls in messages_with_urls:
-            message_id = message.id
-            mapping[message_id] = []
-            for url in urls:
-                summary_info = await self.process_url(message_id, url)
-                if summary_info:
-                    mapping[message_id].append(summary_info)
-        return mapping
-
-    async def process_url(self, message_id, url):
-        """Processes a single URL: fetches content, parses it, generates a summary, and saves it."""
-        filename = self.generate_filename(message_id, url)
-        if self.file_manager.check_file_exists(filename):
-            logging.info("File %s already exists. Skipping.", filename)
-            return {'url': url, 'filename': filename}
-
-        html = await self.fetcher.fetch(url)
-        if not html:
-            logging.warning("No HTML content fetched for URL: %s", url)
-            return None
-
-        content = self.parser.parse(html)
-        if not content:
-            logging.warning("No content extracted from URL: %s", url)
-            return None
-
-        summary = self.summarizer.summarize(content)
-        if not summary:
-            logging.warning("No summary generated for URL: %s", url)
-            return None
-
-        self.file_manager.save_summary(filename, summary)
-        logging.info("Summary saved for message %s, URL: %s", message_id, url)
-        return {'url': url, 'filename': filename}
-
-    @staticmethod
-    def generate_filename(message_id, url):
-        """Generates a sanitized filename based on message ID and URL."""
-        sanitized_url = re.sub(r'\W+', '_', url)
-        return f"{message_id}_{sanitized_url}.md"

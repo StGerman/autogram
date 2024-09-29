@@ -13,9 +13,10 @@ class MessageUpdater:
     - update_messages: Update messages based on the provided mapping and content function.
     - edit_message: Edit a message with the given message_id to have the new_content.
     """
-    def __init__(self, telegram_handler, file_manager):
+    def __init__(self, telegram_handler, file_manager, channel_name):
         self.telegram_handler = telegram_handler
         self.file_manager = file_manager
+        self.channel_name = channel_name
 
     async def update_messages(self, mapping, content_func):
         """
@@ -31,9 +32,10 @@ class MessageUpdater:
         """
         for message_id_str, summaries_info in mapping.items():
             message_id = int(message_id_str)
-            message = await self.telegram_handler.get_message(message_id)
+            logging.info("Updating message %s...", message_id)
+            message = await self.telegram_handler.get_message(self.channel_name, message_id)
             if not message:
-                logging.warning("Message with ID %s not found.", message_id)
+                logging.warning("Message with ID %s not found in %s", message_id, self.channel_name)
                 continue
 
             new_content = content_func(message, summaries_info)
@@ -55,9 +57,7 @@ class MessageUpdater:
         - None
         """
         try:
-            await self.telegram_handler.edit_message(message_id, new_content)
+            await self.telegram_handler.edit_message(self.channel_name, message_id, new_content)
             logging.info("Message %s updated.", message_id)
         except MessageNotModifiedError:
             logging.warning("Message %s not modified. Skipping.", message_id)
-        except Exception as e:
-            logging.error("Error updating message %s: %s", message_id, str(e))
