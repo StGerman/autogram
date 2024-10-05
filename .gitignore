@@ -168,3 +168,4 @@ cython_debug/
 message_summary_mapping.json
 message_summary_mapping_2.json
 .vscode
+logdir

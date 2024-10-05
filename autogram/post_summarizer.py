@@ -61,8 +61,9 @@ class ContentParser:
 class PostSummarizer:
     """Summarizes text using OpenAI's API via the Ell framework."""
 
-    def __init__(self, api_key, lang='en'):
+    def __init__(self, api_key, lang='RU'):
         openai.api_key = api_key
+        ell.init(store='./logdir', autocommit=True, verbose=True)
         self.lang = lang
 
     def truncate_text(self, text, max_tokens):
@@ -77,25 +78,31 @@ class PostSummarizer:
             text = encoding.decode(tokens)
         return text
 
-    @ell.simple(model=MODEL_NAME)
+    @ell.simple(model="gpt-4o", temperature=0.1)
     def summary(self, text):
-        """
-        As a professional content creator, you specialize in microblogging about lifestyle, personal growth, and cutting-edge technologies. Your engaging storytelling captivates an audience eager for both professional and personal development.
-        You are tasked with providing concise, business-oriented blog posts in {self.lang} language. Summarize key insights in a couple of paragraphs, using emojis where appropriate to add personality and clarity. Avoid using titles or headings in markdown;
-        instead, utilize bold text, lists, code blocks, or block quotes for formatting to enhance readability.
-        Incorporate actionable advice and real-world examples to help your readers apply concepts immediately. Encourage community engagement by posing thought-provoking questions or inviting readers to share their experiences.
-        """.strip()
-        return f"Create a post for text: {text}"
+        return [
+            ell.system(
+                f"""
+                As a professional content creator who wrote in {self.lang} language, you specialize in microblogging about lifestyle, personal growth, and cutting-edge technologies. Your engaging storytelling captivates an audience eager for both professional and personal development.
+                You are tasked with providing concise, business-oriented blog posts in {self.lang} language. Summarize key insights in a couple of paragraphs, using emojis where appropriate to add personality and clarity. Avoid using titles or headings in markdown;
+                instead, utilize bold text, lists, code blocks, or block quotes for formatting to enhance readability.
+                Incorporate actionable advice and real-world examples to help your readers apply concepts immediately. Encourage community engagement by posing thought-provoking questions or inviting readers to share their experiences.
+                """.strip()
+            ),
+            ell.user(f"Create a post for text: {text}")
+        ]
 
-    @ell.simple(model=MODEL_NAME)
+    @ell.simple(model="gpt-4o-mini", temperature=1.0)
     def metadata(self, text):
-        """
-        You are a person who is responsible for building cross-links, tags, references, and enriching texts with metadata properties.
-        All metadata should be wrapped with three dashes (---) at the beginning and end.
-        Tags must be comma-separated, camelCase with a leading # symbol,
-        and the publication date must be in ISO 8601 format.
-        """.strip()
-        return f"Add metadata to post: {text}"
+        return [
+            ell.system("""
+            You are a person who is responsible for building cross-links, tags, references, and enriching texts with metadata properties.
+            All available metadata should be wrapped with three dashes (---) at the beginning and end.
+            Tags must be comma-separated, camelCase with a leading # symbol.
+            Publication date must be in ISO 8601 format.
+            """.strip()),
+                ell.user(f"return metadata ONLY for the text bellow: {text}")
+            ]
 
     def summarize(self, text):
         """
@@ -109,13 +116,13 @@ class PostSummarizer:
                 logging.error("Failed to generate summary.")
                 return None
 
-            # Add metadata to the summary
-            final_text = self.metadata(summary_text)
-            if not final_text:
+            # Get metadata to the summary
+            meta_data = self.metadata(summary_text)
+            if not meta_data:
                 logging.error("Failed to add metadata.")
                 return None
 
-            return final_text
+            return summary_text + meta_data
         except Exception as e:
             logging.error(f"Error during summarization: {e}")
             return None
@@ -128,10 +135,18 @@ def process_single_url(fetcher, parser, summarizer, message_id, url):
     content = parser.parse(html)
     if not content:
         return None
+    # Generate the summary
     summary = summarizer.summarize(content)
-    metadata = summarizer.metadata(summary)
     if not summary:
+        logging.error(f"Failed to generate summary for {url}")
         return None
+
+    # Generate the metadata
+    metadata = summarizer.metadata(summary)
+    if not metadata:
+        logging.error(f"Failed to generate metadata for {url}")
+        return None
+
     return {
         'message_id': message_id,
         'url': url,
