@@ -1,0 +1,17 @@
+[
+    {
+        "message_id": 57,
+        "url": "https://docs.openwebui.com/features",
+        "summary": "- Category: Technology & Computing\n- Tags: Technology, Innovation, Open WebUI, open-source, TechNews\n- Published Date: Not Specified\n- Author: Not Specified\n- Is Sponsored: No\n- Is Press Release: Yes\n- Source: GitHub\n- Language: English\n- Region: Not Specified"
+    },
+    {
+        "message_id": 56,
+        "url": "https://github.com/xenova/transformers.js",
+        "summary": "- Title: Introducing Transformers.js: State-of-the-art Machine Learning From Your Browser\n- Author: Hugging Face\n- Date: Current release date\n- Keywords: Machine Learning, Web Development, AI, Artificial Intelligence, Transformers.js, Browser-based, ONNX, Pytorch, TensorFlow, JAX, Audio, Computer Vision, Natural Language Processing\n- Categories: Technology, Software\n- Summary: Hugging Face introduces Transformers.js, which allows you to run transformer models directly in your browser, with no server required. The API supports tasks across natural language processing, computer vision, audio, and multimodal functionalities. ONNX Runtime is utilized for efficient in-browser execution of the models. Transformers.js is compatible with pretrained PyTorch, TensorFlow, or JAX models, which can be easily converted to ONNX using Hugging Face's Optimum. Check out Hugging Face's documentation for more information on using Transformers.js. \n- People: N/A\n- Company: Hugging Face\n- Product: Transformers.js\n- Event: N/A\n- Location: N/A\n- Technology: Machine Learning, AI, Deep Learning, ONNX, Pytorch, TensorFlow, JAX, Natural Language Processing, Audio Processing, Image Processing"
+    },
+    {
+        "message_id": 3,
+        "url": "https://github.com/mrthlinh/Agile-User-Story-Point-Estimation",
+        "summary": "- Title: Agile User Story Point Estimation Guide: Data Analysis, Modelling and Results\n- Author: N/A\n- Date of Publication: N/A\n- Article Type: Guide, Research\n- Categories: Project Management, Agile Methodology, Data Analysis, Machine Learning, AI Models\n- Tags: Agile, Story Point Estimation, Doc2Vec, LSTM, CNN, TF-IDF, Neural Networks, Gradient Boosting Tree, Recurrent Highway Network, Word2Vec, Random Forest, LightGBM, Catboost, TensorFlow, CNN models, RNN\n- Description: A comprehensive guide exploring Agile User Story Point Estimation by analyzing data from 16 large open-source projects. Demonstrates use of models like Doc2Vec, LSTM, CNN & TF-IDF for text processing and regressor models for estimating story points. Also includes evaluation results for accuracy and error, and comparative analysis of different models.\n- Instructions: Downloads available for process instructions\n- References: Extensive list of reference sources focusing on LSTM in TensorFlow, Convolutional Neural Network models, RNN in TF, etc.\n- Objective: To help simplify and optimize Agile User Story Point Estimation process."
+    }
+]
