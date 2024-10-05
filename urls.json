@@ -1,5 +1,11 @@
 [
     {
+        "message_id": 58,
+        "urls": [
+            "https://openai.com/index/introducing-canvas/"
+        ]
+    },
+    {
         "message_id": 57,
         "urls": [
             "https://docs.openwebui.com/features"
@@ -9,6 +15,240 @@
         "message_id": 56,
         "urls": [
             "https://github.com/xenova/transformers.js"
+        ]
+    },
+    {
+        "message_id": 55,
+        "urls": [
+            "https://github.com/TAG-Research/TAG-Bench"
+        ]
+    },
+    {
+        "message_id": 54,
+        "urls": [
+            "https://docs.orbstack.dev"
+        ]
+    },
+    {
+        "message_id": 53,
+        "urls": [
+            "https://realpython.com/"
+        ]
+    },
+    {
+        "message_id": 52,
+        "urls": [
+            "https://realpython.com/:"
+        ]
+    },
+    {
+        "message_id": 50,
+        "urls": [
+            "https://towardsdatascience.com/document-extraction-is-genais-killer-app-9e9c816e6caf:"
+        ]
+    },
+    {
+        "message_id": 48,
+        "urls": [
+            "https://medium.com/@tsecretdeveloper/software-developers-are-aging-out-here-are-the-facts-9ac112640d14:"
+        ]
+    },
+    {
+        "message_id": 45,
+        "urls": [
+            "https://github.com/Rudrabha/Wav2Lip"
+        ]
+    },
+    {
+        "message_id": 44,
+        "urls": [
+            "https://github.com/Stability-AI/generative-models"
+        ]
+    },
+    {
+        "message_id": 43,
+        "urls": [
+            "https://blog.practicalengineering.management/engineering-leadership-tools-and-techniques-for-a-successful-2024-1707fcd022f3"
+        ]
+    },
+    {
+        "message_id": 41,
+        "urls": [
+            "https://towardsdatascience.com/what-nobody-tells-you-about-rags-b35f017e1570"
+        ]
+    },
+    {
+        "message_id": 38,
+        "urls": [
+            "https://karpathy.ai/zero-to-hero.html"
+        ]
+    },
+    {
+        "message_id": 37,
+        "urls": [
+            "https://github.com/danny-avila/LibreChat.git"
+        ]
+    },
+    {
+        "message_id": 36,
+        "urls": [
+            "https://github.com/Waidhoferj/openai-flask-server-example"
+        ]
+    },
+    {
+        "message_id": 35,
+        "urls": [
+            "https://www.reddit.com/r/LocalLLaMA/s/zOjZOmXNFf:"
+        ]
+    },
+    {
+        "message_id": 32,
+        "urls": [
+            "https://docs.github.com/ru/actions/writing-workflows/quickstart:"
+        ]
+    },
+    {
+        "message_id": 31,
+        "urls": [
+            "https://docs.github.com/ru/rest/guides/building-a-ci-server?apiVersion=2022-11-28:"
+        ]
+    },
+    {
+        "message_id": 30,
+        "urls": [
+            "https://ohdarling88.medium.com/3-steps-to-make-web-page-load-3x-faster-in-mobile-app-498fcc6aaedb:"
+        ]
+    },
+    {
+        "message_id": 29,
+        "urls": [
+            "https://medium.com/@avrukin/9-things-i-learned-at-google-1-design-documents-6c3552c19406:"
+        ]
+    },
+    {
+        "message_id": 28,
+        "urls": [
+            "https://www.runpod.io/"
+        ]
+    },
+    {
+        "message_id": 27,
+        "urls": [
+            "https://react-lm.github.io/"
+        ]
+    },
+    {
+        "message_id": 26,
+        "urls": [
+            "https://python.langchain.com/v0.1/docs/integrations/toolkits/slack/#use-within-an-react-agent"
+        ]
+    },
+    {
+        "message_id": 24,
+        "urls": [
+            "https://medium.com/@amardewri/how-to-deploy-local-llm-using-ollama-server-and-ollama-web-ui-on-amazon-ec2-91ffee49d9cc"
+        ]
+    },
+    {
+        "message_id": 23,
+        "urls": [
+            "https://github.com/airbytehq/airbyte"
+        ]
+    },
+    {
+        "message_id": 22,
+        "urls": [
+            "https://github.com/open-webui/open-webui"
+        ]
+    },
+    {
+        "message_id": 21,
+        "urls": [
+            "https://neo4j.com/developer-blog/genai-app-how-to-build/"
+        ]
+    },
+    {
+        "message_id": 20,
+        "urls": [
+            "https://docs.voyageai.com/docs/reranker"
+        ]
+    },
+    {
+        "message_id": 19,
+        "urls": [
+            "https://github.com/pgvector/pgvector"
+        ]
+    },
+    {
+        "message_id": 18,
+        "urls": [
+            "https://www.pinecone.io/learn/series/faiss/"
+        ]
+    },
+    {
+        "message_id": 17,
+        "urls": [
+            "https://www.voyageai.com/"
+        ]
+    },
+    {
+        "message_id": 16,
+        "urls": [
+            "https://www.pinecone.io/learn/series/rag/embedding-models-rundown/"
+        ]
+    },
+    {
+        "message_id": 15,
+        "urls": [
+            "https://medium.com/criteo-engineering/building-better-apis-with-chatgpt-9d3350beaf51"
+        ]
+    },
+    {
+        "message_id": 14,
+        "urls": [
+            "https://developer.atlassian.com/cloud/jira/platform/build-a-jira-app-using-a-framework/"
+        ]
+    },
+    {
+        "message_id": 13,
+        "urls": [
+            "https://developer.atlassian.com/cloud/jira/platform/build-a-jira-app-using-a-framework/"
+        ]
+    },
+    {
+        "message_id": 12,
+        "urls": [
+            "https://js.langchain.com/v0.1/docs/get_started/quickstart/"
+        ]
+    },
+    {
+        "message_id": 11,
+        "urls": [
+            "https://huggingface.co/TroyDoesAI/Mermaid-Llama-6.7B-RAG"
+        ]
+    },
+    {
+        "message_id": 10,
+        "urls": [
+            "https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/"
+        ]
+    },
+    {
+        "message_id": 9,
+        "urls": [
+            "https://python.langchain.com/v0.1/docs/get_started/introduction/"
+        ]
+    },
+    {
+        "message_id": 7,
+        "urls": [
+            "https://github.com/docker/genai-stack?tab=readme-ov-file"
+        ]
+    },
+    {
+        "message_id": 5,
+        "urls": [
+            "https://huggingface.co/"
         ]
     },
     {
