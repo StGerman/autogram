@@ -4,6 +4,7 @@ Update Telegram channel with summarized content.
 This script reads summaries from a JSON file and posts them to a Telegram channel,
 including metadata and the original URL at the bottom of each post.
 Posts are sorted by message_id in ascending order before being sent.
+Handles rate limits by catching FloodWait exceptions.
 """
 
 import os
@@ -12,7 +13,7 @@ import logging
 import asyncio
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from telethon.errors import SessionPasswordNeededError
+from telethon.errors import SessionPasswordNeededError, FloodWaitError
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -58,11 +59,19 @@ async def main():
 
             # Construct the message
             message_text = f"{summary}\n\n{metadata}\n {url}"
-            try:
-                new_message = await client.send_message(DESTINATION_CHANNEL_NAME, message_text)
-                logging.info(f'Sent new message with ID {new_message.id} to {DESTINATION_CHANNEL_NAME}')
-            except Exception as e:
-                logging.error(f'Error sending message: {e}')
+            sent = False
+            while not sent:
+                try:
+                    new_message = await client.send_message(DESTINATION_CHANNEL_NAME, message_text)
+                    logging.info(f'Sent new message with ID {new_message.id} to {DESTINATION_CHANNEL_NAME}')
+                    sent = True
+                except FloodWaitError as e:
+                    wait_time = e.seconds
+                    logging.warning(f'Rate limit exceeded. Waiting for {wait_time} seconds...')
+                    await asyncio.sleep(wait_time)
+                except Exception as e:
+                    logging.error(f'Error sending message: {e}')
+                    sent = True  # Skip this message to prevent infinite loop
 
 if __name__ == '__main__':
     asyncio.run(main())
