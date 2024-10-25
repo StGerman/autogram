@@ -34,12 +34,19 @@ openai.api_key = OPENAI_API_KEY
 @ell.simple(model='gpt-4o', temperature=0.9)
 def goals_validation(goals):
     prompt = """
-    You are a group of seasoned media experts. Your task is to take the goals provided by the client and rewrite them to:
+    You are a group of three media experts:
+
+    - One with a high-tech background
+    - A second who has a business-oriented approach
+    - The third with a background in social psychology and experience in modern media
+
+    Your task is to take the goals provided by the client and rewrite them to:
+
     - Align with the quality and insights of social media experts
     - Gauge wider audience perceptions and improve based on their feedback
     - Be attention-grabbing and resonate with the target audience
 
-    Your response should be a semicolon-separated list of rewritten goals.
+    All experts should provide their own feedback for the goals and then rewrite them to reach a shared agreement. Your response should be a semicolon-separated list of rewritten and agreed-upon goals.
     """.strip()
 
     return [
@@ -69,15 +76,15 @@ def generate_media_plan_prompt(goals):
 You are a seasoned marketing strategist tasked with creating a media plan to achieve the following goals:
 {goals}
 
+Goal Oriented Media Plan focused only on one channel it's a telegram.
 Please outline a media plan that includes the following for each goal:
-- Content Topic
+- Content Topics
 - Target Audience
 - Key Messages
-- Recommended Channels
 - Publishing Schedule (dates)
 
-Provide the plan as a list of posts.
-Ensure that list formated in markdown.
+Provide the plan in JSON format as a list of dictionaries, where each dictionary represents one content topic.
+Ensure that the JSON is properly formatted and parsable.
 """.strip()
     return prompt
 
