@@ -1,0 +1,144 @@
+{
+    "media_plan": {
+        "goals": [
+            {
+                "goal": "Привлечь активных и заинтересованных русскоговорящих разработчиков в наш телеграмм-канал с готовностью инвестировать в свои навыки",
+                "content_topic": "Boost Your Development Skills: Join Our Community!",
+                "target_audience": "Russian-speaking developers who are keen on improving their skills and exploring new technologies.",
+                "key_messages": [
+                    "Join like-minded developers to enhance your skills.",
+                    "Get access to exclusive content and expert advice.",
+                    "Invest in your professional growth with our developer community."
+                ],
+                "recommended_channels": [
+                    "Telegram",
+                    "LinkedIn",
+                    "VKontakte"
+                ],
+                "publishing_schedule": {
+                    "week_1": [
+                        {
+                            "day": "2023-10-01",
+                            "activity": "Introduction to the Telegram channel benefits",
+                            "channel": "LinkedIn"
+                        },
+                        {
+                            "day": "2023-10-03",
+                            "activity": "Testimonial from a successful developer (video)",
+                            "channel": "Telegram"
+                        },
+                        {
+                            "day": "2023-10-05",
+                            "activity": "Invitation to join a live Q&A session",
+                            "channel": "VKontakte"
+                        }
+                    ],
+                    "week_2": [
+                        {
+                            "day": "2023-10-08",
+                            "activity": "Highlight of upcoming events in the channel",
+                            "channel": "Telegram"
+                        },
+                        {
+                            "day": "2023-10-10",
+                            "activity": "Share a snippet of a skill-enhancing article",
+                            "channel": "LinkedIn"
+                        }
+                    ]
+                }
+            },
+            {
+                "goal": "Подать Gen AI как революционный инструмент для автоматизации ежедневных задач и освобождения времени для инноваций",
+                "content_topic": "Revolutionize Your Workflow with Gen AI",
+                "target_audience": "Developers seeking to automate routine tasks and focus on innovation.",
+                "key_messages": [
+                    "Gen AI: Transform your daily tasks into opportunities for innovation.",
+                    "Automate the mundane, innovate the spectacular.",
+                    "Free up your time for what truly matters."
+                ],
+                "recommended_channels": [
+                    "YouTube",
+                    "Twitter",
+                    "Telegram"
+                ],
+                "publishing_schedule": {
+                    "week_3": [
+                        {
+                            "day": "2023-10-15",
+                            "activity": "Video tutorial on using Gen AI for task automation",
+                            "channel": "YouTube"
+                        },
+                        {
+                            "day": "2023-10-17",
+                            "activity": "Infographic on time saved using Gen AI",
+                            "channel": "Twitter"
+                        },
+                        {
+                            "day": "2023-10-19",
+                            "activity": "Case study on a developer’s journey with Gen AI",
+                            "channel": "Telegram"
+                        }
+                    ],
+                    "week_4": [
+                        {
+                            "day": "2023-10-22",
+                            "activity": "Interactive poll on daily tasks developers wish to automate",
+                            "channel": "Twitter"
+                        },
+                        {
+                            "day": "2023-10-24",
+                            "activity": "Webinar announcement on leveraging Gen AI",
+                            "channel": "Telegram"
+                        }
+                    ]
+                }
+            },
+            {
+                "goal": "Увеличить удовлетворенность разработчиков, облегчая их рабочие процессы и повышая их профессиональное счастье через инновационные автоматизированные решения",
+                "content_topic": "Create Happiness in Your Workflow with Automation",
+                "target_audience": "Developers looking to enhance job satisfaction through improved workflows.",
+                "key_messages": [
+                    "Achieve professional happiness with streamlined processes.",
+                    "Your work, made easier with our automated solutions.",
+                    "Experience the joy of a well-organized workflow."
+                ],
+                "recommended_channels": [
+                    "Medium",
+                    "Facebook",
+                    "Telegram"
+                ],
+                "publishing_schedule": {
+                    "week_5": [
+                        {
+                            "day": "2023-10-29",
+                            "activity": "In-depth article on improving job satisfaction with automation",
+                            "channel": "Medium"
+                        },
+                        {
+                            "day": "2023-10-31",
+                            "activity": "Success stories from developers who've improved their workflows",
+                            "channel": "Facebook"
+                        },
+                        {
+                            "day": "2023-11-02",
+                            "activity": "Tips and tricks for a happier professional life with automation",
+                            "channel": "Telegram"
+                        }
+                    ],
+                    "week_6": [
+                        {
+                            "day": "2023-11-05",
+                            "activity": "Live chat session on optimizing workflows",
+                            "channel": "Telegram"
+                        },
+                        {
+                            "day": "2023-11-07",
+                            "activity": "Share a happiness and productivity checklist",
+                            "channel": "Facebook"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
