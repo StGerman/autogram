@@ -38,6 +38,7 @@ async def main():
     await client.start()
     if not await client.is_user_authorized():
         try:
+            print("Your session string is:", client.session.save())
             await client.send_code_request(PHONE_NUMBER)
             code = input('Enter the code you received: ')
             await client.sign_in(PHONE_NUMBER, code)

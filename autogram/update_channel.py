@@ -37,6 +37,7 @@ async def main():
         client = TelegramClient('autogram', API_ID, API_HASH)
 
     async with client:
+        print("Your session string is:", client.session.save())
         if not await client.is_user_authorized():
             try:
                 await client.send_code_request(PHONE_NUMBER)
@@ -53,12 +54,12 @@ async def main():
         summaries_data.sort(key=lambda x: x['message_id'])
 
         for item in summaries_data:
-            summary = item['summary']
+            summary = item['blog_post']
             metadata = item.get('metadata', '')
             url = item.get('url', '')
 
             # Construct the message
-            message_text = f"{summary}\n\n{metadata}\n {url}"
+            message_text = f"{summary}\n\n{url}"
             sent = False
             while not sent:
                 try:
