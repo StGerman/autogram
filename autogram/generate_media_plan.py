@@ -62,8 +62,10 @@ def validate_media_plan_format(media_plan_json):
       You answer should be valid JSON that can be parsed automaticly.
       Please use root element attribute 'media_plan' and keep original language of texts where it's possible.
       Dates should be in ISO format.
+      item_id just a random number in UUID format as reference.
       use snackcase for json objects format
             "media_plan" : [{
+              "item_id: "..."
               "goal": "...",
               "content_topic": "...",
               "target_audience": "...",

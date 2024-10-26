@@ -57,6 +57,7 @@ def main():
             continue
         topic = item.get('content_topic')
         key_messages = item.get('key_messages')
+        item_id = item.get('item_id')
         if not topic or not key_messages:
             logging.warning(f'Missing data in media plan item {idx}, skipping.')
             continue
@@ -68,7 +69,7 @@ def main():
             logging.warning(f"No relevant URLs found for topic: {topic}")
             continue
         url_data.append({
-            'item_id': idx,
+            'item_id': item_id,
             'topic': topic,
             'urls': urls
         })
