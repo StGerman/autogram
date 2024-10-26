@@ -1,70 +1,82 @@
 """
-Extract URLs from Telegram channel messages.
+Build a list of relevant URLs based on the media plan.
 
-This script connects to a Telegram channel and extracts URLs from the messages,
-saving them to a JSON file.
+This script reads the media plan from a JSON file, searches for relevant URLs using duckduckgo_search,
+and saves them to a JSON file.
 """
 
 import os
-import re
 import json
 import logging
-import asyncio
-from telethon import TelegramClient
-from telethon.sessions import StringSession
-from telethon.errors import SessionPasswordNeededError
+from duckduckgo_search import DDGS
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 # Configuration
-API_ID = os.getenv('TELEGRAM_API_ID')
-API_HASH = os.getenv('TELEGRAM_API_HASH')
-SESSION_STRING = os.getenv('TELEGRAM_SESSION_STRING')
-PHONE_NUMBER = os.getenv('PHONE_NUMBER')
-CHANNEL_NAME = os.getenv('TELEGRAM_CHANNEL_NAME')
+INPUT_FILE = 'media_plan.json'
 OUTPUT_FILE = 'urls.json'
+NUM_SOURCES = int(os.getenv('NUM_SOURCES', '3'))  # Number of sources to retrieve per topic
+SUMMARY_LANG = os.getenv('SUMMARY_LANG', 'en').lower()
 
 logging.basicConfig(level=logging.INFO)
 
-async def main():
-    """Main function to extract URLs from a Telegram channel."""
-    if SESSION_STRING:
-        client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
+def search_relevant_urls(query, num_results=3):
+    """Searches for relevant URLs using duckduckgo_search."""
+    logging.info(f"Searching for relevant URLs for query: {query}")
+    urls = []
+    with DDGS() as ddgs:
+        results = ddgs.text(query, region=SUMMARY_LANG, safesearch='Moderate')
+        for result in results:
+            urls.append(result['href'])
+            if len(urls) >= num_results:
+                break
+    return urls
+
+def main():
+    """Main function to build a list of URLs based on the media plan."""
+    with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+        media_plan = json.load(f)
+
+    # Adjusted to handle different possible structures
+    if isinstance(media_plan, dict) and 'media_plan' in media_plan:
+        media_plan = media_plan['media_plan']
+    elif isinstance(media_plan, list):
+        pass
     else:
-        client = TelegramClient('autogram', API_ID, API_HASH)
+        logging.error(f"Unexpected format in {INPUT_FILE}")
+        return
 
-    await client.start()
-    if not await client.is_user_authorized():
-        try:
-            print("Your session string is:", client.session.save())
-            await client.send_code_request(PHONE_NUMBER)
-            code = input('Enter the code you received: ')
-            await client.sign_in(PHONE_NUMBER, code)
-        except SessionPasswordNeededError:
-            password = input('Two-Step Verification enabled. Please enter your password: ')
-            await client.sign_in(password=password)
-
-    url_pattern = re.compile(r'https?://\S+')
-
-    messages = await client.get_messages(CHANNEL_NAME, limit=100)
     url_data = []
 
-    for message in messages:
-        if message.message:
-            found_urls = url_pattern.findall(message.message)
-            if found_urls:
-                url_data.append({
-                    'message_id': message.id,
-                    'urls': found_urls
-                })
+    for idx, item in enumerate(media_plan):
+        logging.info(media_plan)
+        if not isinstance(item, dict):
+            logging.warning(f'Item at index {idx} is not a dictionary, skipping.')
+            continue
+        topic = item.get('content_topic')
+        key_messages = item.get('key_messages')
+        if not topic or not key_messages:
+            logging.warning(f'Missing data in media plan item {idx}, skipping.')
+            continue
+        # Construct the search query
+        query = f"{topic} {key_messages}"
+        # Search for relevant URLs
+        urls = search_relevant_urls(query, num_results=NUM_SOURCES)
+        if not urls:
+            logging.warning(f"No relevant URLs found for topic: {topic}")
+            continue
+        url_data.append({
+            'item_id': idx,
+            'topic': topic,
+            'urls': urls
+        })
 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(url_data, f, ensure_ascii=False, indent=4)
 
-    logging.info(f'Extracted URLs saved to {OUTPUT_FILE}')
-    await client.disconnect()
+    logging.info(f'URLs saved to {OUTPUT_FILE}')
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()

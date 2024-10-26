@@ -46,7 +46,8 @@ def goals_validation(goals):
     - Gauge wider audience perceptions and improve based on their feedback
     - Be attention-grabbing and resonate with the target audience
 
-    All experts should provide their own feedback for the goals and then rewrite them to reach a shared agreement. Your response should be a semicolon-separated list of rewritten and agreed-upon goals.
+    All experts should provide their own feedback for the goals and then rewrite them to reach a shared agreement.
+    Your response should be a semicolon-separated list of rewritten and agreed-upon goals in English.
     """.strip()
 
     return [
@@ -61,7 +62,17 @@ def validate_media_plan_format(media_plan_json):
       You answer should be valid JSON that can be parsed automaticly.
       Please use root element attribute 'media_plan' and keep original language of texts where it's possible.
       Dates should be in ISO format.
-      Don't use Markdown only pure JSON object
+      use snackcase for json objects format
+            "media_plan" : [{
+              "goal": "...",
+              "content_topic": "...",
+              "target_audience": "...",
+              "key_messages": "...",
+              "publishing_schedule": [...]
+            },
+            ...
+            ]
+      Don't use any Markdown formating, only pure JSON object.
     """
 
     return [
@@ -82,6 +93,8 @@ Please outline a media plan that includes the following for each goal:
 - Target Audience
 - Key Messages
 - Publishing Schedule (dates)
+
+Please generate the media plan in English.
 
 Provide the plan in JSON format as a list of dictionaries, where each dictionary represents one content topic.
 Ensure that the JSON is properly formatted and parsable.
@@ -104,6 +117,8 @@ def generate_media_plan(goals):
         media_plan = json.loads(response_text)
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse media plan as JSON: {e}")
+        logging.debug(f"Response Text: {response_text}")
+        # Optionally, implement a retry mechanism or save the raw response for manual inspection.
         return None
 
     return media_plan
