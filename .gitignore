@@ -169,3 +169,6 @@ message_summary_mapping.json
 message_summary_mapping_2.json
 .vscode
 logdir
+summaries.json
+urls.json
+media_plan.json

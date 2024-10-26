@@ -87,8 +87,26 @@ def truncate_text(text, max_tokens=4096):
     truncated_text = encoding.decode(tokens)
     return truncated_text
 
+@ell.simple(model='gpt-4o', temperature=0.1)
+def editor(text):
+    prompt = """
+    Ты — главный "котан" и редактор персонального блога.
+    Отредактируй текст, чтобы он был более личным и написан от первого лица для создания уютной атмосферы.
+    При редактировании следуй принципам из книги "Пиши, сокращай":
+    - убери лишние слова
+    - делай текст простым и понятным
+    - используй активный залог
+    - будь конкретен
+    - избегай "воды"
+    - сфокусируйся на интересах читателя и решении его проблем
+    - всегда используй профессиональный термины на английском языке такие как "embeddings", "metadata", "API", "LLM" и т.д.
+    """.strip()
+    return [
+        ell.system(prompt),
+        ell.user(f"Проведи редактуру текста и предоставть финальный вариант. text: \n\n {text}")
+    ]
 
-@ell.simple(model=OPENAI_MODEL_NAME, temperature=0.1)
+@ell.simple(model="gpt-4o", temperature=0.1)
 def summarize_text(text):
     """Summarizes the given text using a custom prompt."""
     prompt = f"""
@@ -134,10 +152,15 @@ def process_url(message_id, url):
     if not metadata:
         logging.error(f'Failed to generate metadata for {url}')
         return None
+    blog_post = editor(summary+metadata)
+    if not blog_post:
+        logging.error(f'Failed to generate blog post for {url}')
+        return None
     return {
         'message_id': message_id,
         'url': url,
         'summary': summary,
+        'blog_post': blog_post,
         'metadata': metadata
     }
 
