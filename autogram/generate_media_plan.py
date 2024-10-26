@@ -34,19 +34,13 @@ openai.api_key = OPENAI_API_KEY
 @ell.simple(model='gpt-4o', temperature=0.9)
 def goals_validation(goals):
     prompt = """
-    You are a group of three media experts:
+    You are a group of media experts:
 
     - One with a high-tech background
     - A second who has a business-oriented approach
     - The third with a background in social psychology and experience in modern media
 
-    Your task is to take the goals provided by the client and rewrite them to:
-
-    - Align with the quality and insights of social media experts
-    - Gauge wider audience perceptions and improve based on their feedback
-    - Be attention-grabbing and resonate with the target audience
-
-    All experts should provide their own feedback for the goals and then rewrite them to reach a shared agreement.
+    All experts should provide their own feedback for the goals and then split goals on smaller peaces to reach a shared agreement about exeact goals wording in with maximum details.
     Your response should be a semicolon-separated list of rewritten and agreed-upon goals in English.
     """.strip()
 
@@ -65,7 +59,7 @@ def validate_media_plan_format(media_plan_json):
       item_id just a random number in UUID format as reference.
       use snackcase for json objects format
             "media_plan" : [{
-              "item_id: "..."
+              "item_id: "...",
               "goal": "...",
               "content_topic": "...",
               "target_audience": "...",
@@ -84,19 +78,19 @@ def validate_media_plan_format(media_plan_json):
 
 @ell.simple(model='gpt-4o', temperature=0.7)
 def generate_media_plan_prompt(goals):
-    """Generates a prompt for the media plan based on the provided goals."""
+    """Generates a prompt for the media plan based on the provided prompt."""
     prompt = f"""
-You are a seasoned marketing strategist tasked with creating a media plan to achieve the following goals:
+You are a seasoned marketing strategist tasked with creating a content plan to achieve the following blog vision:
 {goals}
 
-Goal Oriented Media Plan focused only on one channel it's a telegram.
+Content Plan focused only on one channel it's a telegram.
 Please outline a media plan that includes the following for each goal:
-- Content Topics
+- Topics
 - Target Audience
 - Key Messages
 - Publishing Schedule (dates)
 
-Please generate the media plan in English.
+Please generate the content plan in English.
 
 Provide the plan in JSON format as a list of dictionaries, where each dictionary represents one content topic.
 Ensure that the JSON is properly formatted and parsable.
