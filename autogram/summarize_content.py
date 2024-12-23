@@ -22,7 +22,7 @@ load_dotenv()
 # Configuration
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 OPENAI_MODEL_NAME = os.getenv('OPENAI_MODEL_NAME', 'gpt-4o')
-SUMMARY_LANG = os.getenv('SUMMARY_LANG', 'ru').lower()
+SUMMARY_LANG = os.getenv('SUMMARY_LANG', 'Russian')
 INPUT_FILE = 'urls.json'
 OUTPUT_FILE = 'summaries.json'
 
@@ -93,9 +93,10 @@ def summarize_text(text):
     """Summarizes the given text using a custom prompt."""
     prompt = f"""
 As a professional content creator, you specialize in microblogging about lifestyle, personal growth, and cutting-edge technologies. Your engaging storytelling captivates an audience eager for both professional and personal development.
-You are tasked with providing concise, business-oriented blog posts in {SUMMARY_LANG} language. Summarize key insights in a couple of paragraphs, using emojis where appropriate to add personality and clarity. Avoid using titles or headings in markdown;
+You are tasked with providing concise, business-oriented blog posts. Summarize key insights in the {SUMMARY_LANG} language in a couple of paragraphs.
+Using emojis where appropriate to add casuality and clarity to {SUMMARY_LANG} text. Avoid using titles or headings in markdown;
 instead, utilize bold text, lists, code blocks, or block quotes for formatting to enhance readability.
-Incorporate actionable advice and real-world examples to help your readers apply concepts immediately. Encourage community engagement by posing thought-provoking questions or inviting readers to share their experiences.
+Incorporate actionable advice and real-world examples to help your readers apply concepts immediately.
 """.strip()
     return [
         ell.system(prompt),
