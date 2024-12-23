@@ -8,7 +8,6 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.11"
-# openai = "^0.10.0"
 requests = "^2.32.3"
 telethon = "^1.36.0"
 openai = "^1.45.0"
@@ -30,7 +29,3 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-save = "autogram.main:save"
-update = "autogram.main:update"
-restore = "autogram.main:restore"
-autogram = "autogram.main:main"

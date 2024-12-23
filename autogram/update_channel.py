@@ -30,10 +30,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def main():
     """Main function to post summaries to a Telegram channel."""
-    if SESSION_STRING:
-        client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
-    else:
-        client = TelegramClient('autogram', API_ID, API_HASH)
+    client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
 
     async with client:
         if not await client.is_user_authorized():
