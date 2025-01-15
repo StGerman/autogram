@@ -14,7 +14,7 @@ openai = "^1.45.0"
 beautifulsoup4 = "^4.12.3"
 python-dotenv = "^1.0.1"
 newspaper3k = "^0.2.8"
-lxml-html-clean = "^0.2.2"
+lxml-html-clean = "^0.4.0"
 tiktoken = "^0.7.0"
 ell-ai = {extras = ["all"], version = ">0.0.13"}
 fastapi = { extras = ["standart"], version = "^0.111.1" }
