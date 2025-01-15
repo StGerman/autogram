@@ -16,7 +16,8 @@ python-dotenv = "^1.0.1"
 newspaper3k = "^0.2.8"
 lxml-html-clean = "^0.2.2"
 tiktoken = "^0.7.0"
-ell-ai = {extras = ["all"], version = "^0.0.13"}
+ell-ai = {extras = ["all"], version = ">0.0.13"}
+fastapi = { extras = ["standart"], version = "^0.111.1" }
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
